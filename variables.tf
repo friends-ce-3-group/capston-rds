@@ -10,3 +10,6 @@ variable "region" {
   type = string
 }
 
+variable "dbname" {
+  type = string
+}
