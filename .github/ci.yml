@@ -1,0 +1,47 @@
+name: Terraform CI and Manual Destroy
+
+on:
+  push:
+    branches:
+      - working # Trigger CI on pushes to the 'working' branch
+  workflow_dispatch: {} # Allow manual triggering for destroy
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Init
+        run: terraform init
+
+      - name: Validate
+        run: terraform validate
+
+  destroy:
+    runs-on: ubuntu-latest
+    needs: ci # Ensure CI job completes before running destroy
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Init
+        run: terraform init
+
+      - name: Plan Destroy
+        run: terraform plan -destroy -out=destroy.tfplan
+        env:
+          TF_VAR_destroy: 1
+
+      - name: Apply Destroy
+        if: github.event.inputs.confirmDestroy == 'true'
+        run: terraform apply destroy.tfplan
