@@ -4,9 +4,7 @@ data "aws_vpcs" "vpc" {
   }
 }
 
-output "vpc_data" {
-  value = data.aws_vpcs.vpc.ids
-}
+
 
 
 data "aws_subnets" "subnets" {
@@ -21,6 +19,3 @@ data "aws_subnets" "subnets" {
   }
 }
 
-output "subnets_data" {
-  value = data.aws_subnets.subnets.ids
-}

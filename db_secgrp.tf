@@ -26,6 +26,3 @@ data "aws_security_group" "vpc_secgrp" {
   }
 }
 
-output "vpc_secgrp_ecs" {
-  value = data.aws_security_group.vpc_secgrp.id
-}
