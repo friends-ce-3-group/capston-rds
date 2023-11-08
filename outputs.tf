@@ -9,3 +9,11 @@
 # output "vpc_secgrp_ecs" {
 #   value = data.aws_security_group.vpc_secgrp.id
 # }
+
+output "db_endpoint" {
+    value = aws_db_instance.rdsdb.address
+}
+
+output "db_endpoint_port" {
+    value = aws_db_instance.rdsdb.port
+}
