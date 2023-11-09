@@ -11,7 +11,7 @@ resource "aws_db_instance" "rdsdb" {
   parameter_group_name = aws_db_parameter_group.mysql_pg.name
 
   # vpc_security_group_ids = [data.aws_security_group.vpc_secgrp.id]
-  vpc_security_group_ids = [aws_security_group.vpc_secgrp.id]
+  vpc_security_group_ids = [aws_security_group.rds_secgrp.id]
   db_subnet_group_name   = aws_db_subnet_group.db_subnet_group.name
 
   backup_retention_period = var.db_backup_retention_period # number of days to retain automated backups
@@ -19,7 +19,7 @@ resource "aws_db_instance" "rdsdb" {
   maintenance_window      = var.db_maintenance_window      # Preferred UTC maintenance window
 
   skip_final_snapshot       = false # backups are created in the form of snapshots
-  final_snapshot_identifier = "${var.proj_name}-db-snapshot"
+  final_snapshot_identifier = "${var.resource_grp_name}-db-snapshot"
 
   monitoring_interval          = var.db_monitoring_interval # monitoring interval in seconds (must be >= 60s)
   monitoring_role_arn          = aws_iam_role.rds_monitoring_role.arn
@@ -39,14 +39,14 @@ resource "aws_db_instance" "replica" {
   parameter_group_name = aws_db_parameter_group.mysql_pg.name
 
   # vpc_security_group_ids = [data.aws_security_group.vpc_secgrp.id]
-  vpc_security_group_ids = [aws_security_group.vpc_secgrp.id]
+  vpc_security_group_ids = [aws_security_group.rds_secgrp.id]
 
   backup_retention_period = var.db_backup_retention_period
   backup_window           = var.db_backup_window
   maintenance_window      = var.db_maintenance_window
 
   skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.proj_name}-db-snapshot"
+  final_snapshot_identifier = "${var.resource_grp_name}-db-snapshot"
 
   monitoring_interval          = var.db_monitoring_interval
   monitoring_role_arn          = aws_iam_role.rds_monitoring_role.arn

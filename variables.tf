@@ -1,8 +1,8 @@
-variable "proj_name" {
+variable "resource_grp_name" {
   type = string
 }
 
-variable "proj_name_root" {
+variable "proj_name" {
   type = string
 }
 
@@ -56,4 +56,8 @@ variable "db_backup_retention_period" {
 
 variable "db_monitoring_interval" {
   type = number
+}
+
+variable "db_sg_allows_ingress_from_these_sg" {
+  type = list(string)
 }

@@ -1,5 +1,5 @@
 resource "aws_db_parameter_group" "mysql_pg" {
-  name   = "${var.proj_name}-param-grp"
+  name   = "${var.resource_grp_name}-param-grp"
   family = "mysql5.7"
 
   parameter {

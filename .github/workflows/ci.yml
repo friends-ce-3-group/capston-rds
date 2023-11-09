@@ -1,11 +1,14 @@
 name: Terraform CI and Manual Destroy
 
 on:
-  push:
-    branches:
-      - "*" # Trigger CI on pushes to the 'working' branch
-
-  workflow_dispatch: {} # Allow manual triggering for destroy
+  workflow_dispatch:
+    inputs:
+      deployment:
+        type: choice
+        description: DeployOrTearDown
+        options:
+          - Apply
+          - Destroy
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -33,28 +36,14 @@ jobs:
       - name: Validate
         run: terraform validate
 
-      - name: Plan
-        run: terraform plan
+      - name: apply or destroy
+        run: |
+          if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
+            terraform apply -auto-approve
+          elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then  
+            terraform destroy -auto-approve
+          fi
+        shell: bash
 
-  # destroy:
-  #   runs-on: ubuntu-latest
-  #   needs: ci # Ensure CI job completes before running destroy
 
-  #   steps:
-  #     - name: Checkout Repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Setup Terraform
-  #       uses: hashicorp/setup-terraform@v2
-
-  #     - name: Init
-  #       run: terraform init
-
-  #     - name: Plan Destroy
-  #       run: terraform plan -destroy -out=destroy.tfplan
-  #       env:
-  #         TF_VAR_destroy: 1
-
-  #     - name: Apply Destroy
-  #       if: github.event.inputs.confirmDestroy == 'true'
-  #       run: terraform apply destroy.tfplan
+  

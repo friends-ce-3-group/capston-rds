@@ -3,9 +3,9 @@ module "rds" {
 
     region = var.region
 
-    proj_name = var.proj_name
+    resource_grp_name = var.resource_grp_name
 
-    proj_name_root = var.proj_name_root
+    proj_name = var.proj_name
 
     db_name = var.db_name
 
@@ -30,4 +30,6 @@ module "rds" {
     db_backup_retention_period = var.db_backup_retention_period
 
     db_monitoring_interval = var.db_monitoring_interval # seconds, min 60s
+
+    db_sg_allows_ingress_from_these_sg = local.vpc_sg_ids
 }

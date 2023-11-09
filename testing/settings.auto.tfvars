@@ -1,12 +1,12 @@
 region = "us-west-2"
 
-proj_name = "friends-capstone-rds"
+resource_grp_name = "friends-capstone-rds"
 
-proj_name_root = "friends-capstone"
+proj_name = "friends-capstone"
 
 db_name = "friendscapstonerds"
 
-db_allocated_storage = 5
+db_allocated_storage = 20
 
 db_instance_class = "db.t3.medium"
 

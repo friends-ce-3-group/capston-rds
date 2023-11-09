@@ -1,8 +1,8 @@
-variable "proj_name" {
+variable "resource_grp_name" {
   type = string
 }
 
-variable "proj_name_root" {
+variable "proj_name" {
   type = string
 }
 
