@@ -1,4 +1,4 @@
-name: Terraform CI and Manual Destroy
+name: Terraform Apply or Destroy RDS
 
 on:
   workflow_dispatch:
