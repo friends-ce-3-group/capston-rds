@@ -34,8 +34,8 @@ jobs:
 
       - name: test command
         run: |
-          echo '"db_username='$DB_USERNAME''" 
-          echo '"db_password='$DB_PASSWORD''"
+          echo "db_username='$DB_USERNAME'" 
+      #    echo '"db_password='$DB_PASSWORD''"
 
       # - name: Init
       #   run: terraform init
