@@ -23,7 +23,7 @@ module "rds" {
 
   db_username = var.db_username
 
-  db_password = var.db_password
+  db_pw = var.db_pw
 
   db_backup_window = var.db_backup_window
 

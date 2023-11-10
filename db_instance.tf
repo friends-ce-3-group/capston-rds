@@ -6,7 +6,7 @@ resource "aws_db_instance" "rdsdb" {
   instance_class      = var.db_instance_class
   db_name             = var.db_name
   username            = var.db_username
-  password            = var.db_password
+  password            = var.db_pw
   publicly_accessible = var.publicly_accessible
 
   parameter_group_name = aws_db_parameter_group.mysql_pg.name
