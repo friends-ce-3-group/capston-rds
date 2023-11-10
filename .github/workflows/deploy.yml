@@ -18,7 +18,7 @@ env:
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
 jobs:
-  ci:
+  deploy:
     runs-on: ubuntu-latest
 
     defaults:
@@ -35,7 +35,7 @@ jobs:
       - name: test command
         run: |
           echo \"db_username=$DB_USERNAME\"
-      #    echo '"db_password='$DB_PASSWORD''"
+          echo \"db_password=$DB_PASSWORD\"
 
       # - name: Init
       #   run: terraform init
