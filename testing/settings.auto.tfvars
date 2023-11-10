@@ -18,10 +18,6 @@ db_engine = "mysql"
 
 db_engine_version = "5.7" # use the tried and tested mysql:5.7
 
-# db_username = "admin"
-
-# db_password = "password"
-
 db_backup_window = "19:00-20:00"
 
 db_maintenance_window = "mon:20:00-mon:21:00"
