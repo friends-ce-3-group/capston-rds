@@ -1,15 +1,14 @@
 name: Terraform Apply or Destroy RDS
 
 on:
-  push:
-  # workflow_dispatch:
-  #   inputs:
-  #     deployment:
-  #       type: choice
-  #       description: DeployOrTearDown
-  #       options:
-  #         - Apply
-  #         - Destroy
+  workflow_dispatch:
+    inputs:
+      deployment:
+        type: choice
+        description: DeployOrTearDown
+        options:
+          - Apply
+          - Destroy
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -42,23 +41,23 @@ jobs:
       - name: plan
         run: terraform plan -var "db_username=${{ secrets.DB_USERNAME }}" -var "db_pw=${{ secrets.DB_PASSWORD }}"
 
-      # - name: apply or destroy
-      #   run: |
-      #     if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
-      #       terraform apply -var \"db_username=$DB_USERNAME\" -var \"db_pw=$DB_PASSWORD\" -auto-approve
-      #     elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then  
-      #       terraform destroy -auto-approve
-      #     fi
-      #   shell: bash
+      - name: apply or destroy
+        run: |
+          if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
+            terraform apply -var "db_username=${{ secrets.DB_USERNAME }}" -var "db_pw=${{ secrets.DB_PASSWORD }}" -auto-approve
+          elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then  
+            terraform destroy -auto-approve
+          fi
+        shell: bash
 
-      # - name: Push RDS endpoint to organization variables
-      #   run: |
-      #     if [ ${{ github.event.inputs.deployment }} == 'Setup' ]; then  
-      #       cat RDS_ADDRESS.dat
-      #       source RDS_ADDRESS.dat
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"'$RDS_ADDRESS'","visibility":"all"}'
-      #     elif [ ${{ github.event.inputs.deployment }} == 'TearDown' ]; then
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"EMPTY","visibility":"all"}'
-      #     fi
+      - name: Push RDS endpoint to organization variables
+        run: |
+          if [ ${{ github.event.inputs.deployment }} == 'Setup' ]; then  
+            cat RDS_ADDRESS.dat
+            source RDS_ADDRESS.dat
+            curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"'$RDS_ADDRESS'","visibility":"all"}'
+          elif [ ${{ github.event.inputs.deployment }} == 'TearDown' ]; then
+            curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"EMPTY","visibility":"all"}'
+          fi
 
   
