@@ -40,7 +40,7 @@ jobs:
         run: terraform validate
 
       - name: plan
-        run: terraform plan -var "db_username=$DB_USERNAME" -var "db_pw=$DB_PASSWORD"
+        run: terraform plan -var "db_username='$DB_USERNAME'" -var "db_pw='$DB_PASSWORD'"
 
       # - name: apply or destroy
       #   run: |
