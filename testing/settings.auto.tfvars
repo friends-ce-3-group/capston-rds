@@ -6,6 +6,8 @@ proj_name = "friends-capstone"
 
 db_name = "friendscapstonerds"
 
+publicly_accessible = true
+
 db_allocated_storage = 20
 
 db_instance_class = "db.t3.medium"
@@ -16,9 +18,9 @@ db_engine = "mysql"
 
 db_engine_version = "5.7" # use the tried and tested mysql:5.7
 
-db_username = "admin"
+# db_username = "admin"
 
-db_password = "password"
+# db_password = "password"
 
 db_backup_window = "19:00-20:00"
 

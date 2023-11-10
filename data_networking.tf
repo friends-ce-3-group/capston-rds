@@ -8,7 +8,7 @@ data "aws_vpcs" "vpc" {
   }
 }
 
-data "aws_subnets" "pvt_subnets" {
+data "aws_subnets" "private_subnets" {
 
   filter {
     name   = "vpc-id"
@@ -22,7 +22,7 @@ data "aws_subnets" "pvt_subnets" {
 
 }
 
-data "aws_subnets" "pub_subnets" {
+data "aws_subnets" "public_subnets" {
 
   filter {
     name   = "vpc-id"

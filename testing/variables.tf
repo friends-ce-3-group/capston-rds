@@ -57,3 +57,7 @@ variable "db_backup_retention_period" {
 variable "db_monitoring_interval" {
   type = number
 }
+
+variable "publicly_accessible" {
+  type = bool
+}

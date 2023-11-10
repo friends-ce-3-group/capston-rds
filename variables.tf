@@ -61,3 +61,7 @@ variable "db_monitoring_interval" {
 variable "db_sg_allows_ingress_from_these_sg" {
   type = list(string)
 }
+
+variable "publicly_accessible" {
+  type = bool
+}

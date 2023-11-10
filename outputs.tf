@@ -11,9 +11,10 @@
 # }
 
 output "db_endpoint" {
-    value = aws_db_instance.rdsdb.address
+  value = aws_db_instance.rdsdb.address
 }
 
 output "db_endpoint_port" {
-    value = aws_db_instance.rdsdb.port
+  value = aws_db_instance.rdsdb.port
 }
+
