@@ -32,11 +32,6 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: test command
-        run: |
-          echo \"db_username=$DB_USERNAME\"
-          echo \"db_pw=$DB_PASSWORD\"
-
       - name: Init
         run: terraform init
 
