@@ -39,12 +39,12 @@ jobs:
         run: terraform validate
 
       - name: Plan
-        run: terraform plan
+        run: terraform plan -var \"db_username=$DB_USERNAME\" -var \"db_pw=$DB_PASSWORD\"
 
       - name: apply or destroy
         run: |
           if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
-            terraform apply -var \"db_username=$DB_USERNAME\" -var \"db_pw=$DB_PASSWORD\"  -auto-approve
+            terraform apply -var \"db_username=$DB_USERNAME\" -var \"db_pw=$DB_PASSWORD\" -auto-approve
           elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then  
             terraform destroy -auto-approve
           fi
