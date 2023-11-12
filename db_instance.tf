@@ -1,4 +1,5 @@
 resource "aws_db_instance" "rdsdb" {
+  identifier          = var.db_name
   allocated_storage   = var.db_allocated_storage # 5 GB
   storage_type        = var.db_storage_type
   engine              = var.db_engine
@@ -35,7 +36,7 @@ resource "aws_db_instance" "rdsdb" {
   apply_immediately = true
 
   tags = {
-    name = "friendscapstonerds"
+    name      = var.db_name
     proj_name = "friends-capstone"
   }
 }

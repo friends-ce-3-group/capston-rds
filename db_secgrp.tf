@@ -49,7 +49,7 @@ resource "aws_security_group" "rds_secgrp" {
   }
 
   tags = {
-    name = "${var.resource_grp_name}-sg"
+    name      = "${var.resource_grp_name}-sg"
     proj_name = "${var.proj_name}"
   }
 }
