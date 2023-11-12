@@ -3,7 +3,7 @@ resource "local_file" "write_url" {
 
   content  = <<-EOT
     RDS_ADDRESS_URL=${module.rds.db_endpoint}
-    RDS_NAME=${var.db_name}
+    RDS_DBNAME=${var.db_name}
   EOT
 
 }
