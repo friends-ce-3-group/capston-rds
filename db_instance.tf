@@ -35,10 +35,17 @@ resource "aws_db_instance" "rdsdb" {
 
   apply_immediately = true
 
+  enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
+
   tags = {
     name      = var.db_name
     proj_name = "friends-capstone"
   }
+}
+
+resource "aws_cloudwatch_log_group" "error" {
+  name = "/aws/rds/instance/${aws_db_instance.rdsdb.identifier}"
+  retention_in_days = 7
 }
 
 
