@@ -45,12 +45,14 @@ resource "aws_db_instance" "rdsdb" {
 
 resource "aws_cloudwatch_log_group" "error" {
   name = "/aws/rds/instance/${aws_db_instance.rdsdb.identifier}"
-  retention_in_days = 7
+  retention_in_days = 0
 }
 
 
 resource "aws_db_instance" "replica" {
-  count = var.publicly_accessible ? 0 : 1
+  # count = var.publicly_accessible ? 0 : 1
+  
+  identifier = "${var.db_name}-replica"
 
   replicate_source_db = aws_db_instance.rdsdb.identifier
   instance_class      = var.db_instance_class
