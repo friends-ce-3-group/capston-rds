@@ -20,7 +20,7 @@ resource "aws_db_instance" "rdsdb" {
   backup_window           = var.db_backup_window           # UTC time. 3am-4am SGT
   maintenance_window      = var.db_maintenance_window      # Preferred UTC maintenance window
 
-  skip_final_snapshot       = var.publicly_accessible ? true : false # backups are created in the form of snapshots
+  skip_final_snapshot       = false # backups are created in the form of snapshots
   final_snapshot_identifier = "${var.resource_grp_name}-db-snapshot"
   # final_snapshot_identifier = null
 
@@ -43,11 +43,16 @@ resource "aws_db_instance" "rdsdb" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "error" {
-  name = "/aws/rds/instance/${aws_db_instance.rdsdb.identifier}"
-  retention_in_days = 0
+locals{
+  cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 }
 
+resource "aws_cloudwatch_log_group" "log_data" {
+  for_each = toset(local.cloudwatch_logs_exports)
+
+  name = "/aws/rds/instance/${aws_db_instance.rdsdb.identifier}/${each.value}"
+  retention_in_days = 0
+}
 
 resource "aws_db_instance" "replica" {
   # count = var.publicly_accessible ? 0 : 1
@@ -66,8 +71,8 @@ resource "aws_db_instance" "replica" {
   backup_window           = var.db_backup_window
   maintenance_window      = var.db_maintenance_window
 
-  skip_final_snapshot       = var.publicly_accessible ? true : false
-  final_snapshot_identifier = "${var.resource_grp_name}-db-snapshot"
+  skip_final_snapshot       = false
+  final_snapshot_identifier = "${var.resource_grp_name}-db-replica-snapshot"
   # final_snapshot_identifier = null
 
   monitoring_interval          = var.db_monitoring_interval
@@ -78,4 +83,9 @@ resource "aws_db_instance" "replica" {
   kms_key_id        = aws_kms_key.kms_key.arn
 
   multi_az = true
+
+  tags = {
+    name      = "${var.db_name}-replica"
+    proj_name = "friends-capstone"
+  }
 }
