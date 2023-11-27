@@ -65,3 +65,9 @@ variable "db_sg_allows_ingress_from_these_sg" {
 variable "publicly_accessible" {
   type = bool
 }
+
+variable "db_restore_from_latest_snapshot" {
+  type = bool
+  default = false
+  description = "Whether to restore RDS from the latest snapshot"
+}

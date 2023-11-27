@@ -34,4 +34,6 @@ module "rds" {
   db_monitoring_interval = var.db_monitoring_interval # seconds, min 60s
 
   db_sg_allows_ingress_from_these_sg = local.vpc_sg_ids
+
+  db_restore_from_latest_snapshot = var.db_restore_from_latest_snapshot
 }

@@ -25,3 +25,5 @@ db_maintenance_window = "mon:20:00-mon:21:00"
 db_backup_retention_period = 7
 
 db_monitoring_interval = 60 # seconds, min 60s
+
+db_restore_from_latest_snapshot = false

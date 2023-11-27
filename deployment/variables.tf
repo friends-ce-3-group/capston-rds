@@ -61,3 +61,7 @@ variable "db_monitoring_interval" {
 variable "publicly_accessible" {
   type = bool
 }
+
+variable db_restore_from_latest_snapshot {
+  type = bool
+}

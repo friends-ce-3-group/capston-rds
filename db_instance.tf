@@ -14,7 +14,7 @@ resource "aws_db_instance" "rdsdb" {
   username            = var.db_username
   password            = var.db_pw
   publicly_accessible = var.publicly_accessible
-  snapshot_identifier = data.aws_db_snapshot.db_snapshot.id
+  snapshot_identifier = var.db_restore_from_latest_snapshot? data.aws_db_snapshot.db_snapshot.id : null
 
   parameter_group_name = aws_db_parameter_group.mysql_pg.name
 
