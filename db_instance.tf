@@ -1,3 +1,8 @@
+data "aws_db_snapshot" "db_snapshot" {
+    most_recent = true
+    db_instance_identifier = var.db_name
+}
+
 resource "aws_db_instance" "rdsdb" {
   identifier          = var.db_name
   allocated_storage   = var.db_allocated_storage # 5 GB
@@ -9,20 +14,21 @@ resource "aws_db_instance" "rdsdb" {
   username            = var.db_username
   password            = var.db_pw
   publicly_accessible = var.publicly_accessible
+  snapshot_identifier = data.aws_db_snapshot.db_snapshot.id
 
   parameter_group_name = aws_db_parameter_group.mysql_pg.name
 
   # vpc_security_group_ids = [data.aws_security_group.vpc_secgrp.id]
   vpc_security_group_ids = [aws_security_group.rds_secgrp.id]
-  db_subnet_group_name   = var.publicly_accessible ? aws_db_subnet_group.db_subnet_group_pub[0].name : aws_db_subnet_group.db_subnet_group_pvt[0].name
+  db_subnet_group_name   = var.publicly_accessible ? aws_db_subnet_group.db_subnet_group_pub.name : aws_db_subnet_group.db_subnet_group_pvt.name
 
   backup_retention_period = var.db_backup_retention_period # number of days to retain automated backups
   backup_window           = var.db_backup_window           # UTC time. 3am-4am SGT
   maintenance_window      = var.db_maintenance_window      # Preferred UTC maintenance window
 
-  skip_final_snapshot       = false # backups are created in the form of snapshots
-  final_snapshot_identifier = "${var.resource_grp_name}-db-snapshot"
-  # final_snapshot_identifier = null
+  skip_final_snapshot       = true # backups are created in the form of snapshots
+  # final_snapshot_identifier = "${var.resource_grp_name}-db-snapshot"
+  final_snapshot_identifier = null
 
   monitoring_interval          = var.db_monitoring_interval # monitoring interval in seconds (must be >= 60s)
   monitoring_role_arn          = aws_iam_role.rds_monitoring_role.arn
@@ -41,6 +47,8 @@ resource "aws_db_instance" "rdsdb" {
     name      = var.db_name
     proj_name = "friends-capstone"
   }
+
+  depends_on = [ aws_kms_key.kms_key ]
 }
 
 locals{
@@ -71,16 +79,16 @@ resource "aws_db_instance" "replica" {
   backup_window           = var.db_backup_window
   maintenance_window      = var.db_maintenance_window
 
-  skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.resource_grp_name}-db-replica-snapshot"
-  # final_snapshot_identifier = null
+  skip_final_snapshot       = true
+  # final_snapshot_identifier = "${var.resource_grp_name}-db-replica-snapshot"
+  final_snapshot_identifier = null
 
   monitoring_interval          = var.db_monitoring_interval
   monitoring_role_arn          = aws_iam_role.rds_monitoring_role.arn
   performance_insights_enabled = true
 
   storage_encrypted = true
-  kms_key_id        = aws_kms_key.kms_key.arn
+  # kms_key_id        = aws_kms_key.kms_key.arn
 
   multi_az = true
 

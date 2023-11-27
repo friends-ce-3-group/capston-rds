@@ -6,7 +6,7 @@ proj_name = "friends-capstone"
 
 db_name = "friendscapstonerds"
 
-publicly_accessible = true
+publicly_accessible = false
 
 db_allocated_storage = 20
 

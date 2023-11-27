@@ -6,7 +6,7 @@
 
 #   # subnet_ids = data.aws_subnets.pvt_subnets.ids # use the IPs in the private subnet
 
-#   subnet_ids = data.aws_subnets.pub_subnets.ids # use the IPs in the private subnet
+#   subnet_ids = data.aws_subnets.pub_subnets.ids # use the IPs in the privatEe subnet
 
 #   tags = {
 #     Name = "${var.resource_grp_name}-subnet-group"
@@ -17,9 +17,9 @@
 
 # Associate DB with private subnets when not publicly_accessible
 resource "aws_db_subnet_group" "db_subnet_group_pvt" {
-  count = var.publicly_accessible ? 0 : 1
+  # count = var.publicly_accessible ? 0 : 1
 
-  name = "${var.resource_grp_name}-subnet-group"
+  name = "${var.resource_grp_name}-subnet-group-pvt"
 
   # subnet_ids = data.aws_subnets.pvt_subnets.ids # use the IPs in the private subnet
 
@@ -32,9 +32,9 @@ resource "aws_db_subnet_group" "db_subnet_group_pvt" {
 
 # Associate DB with public subnets when publicly_accessible
 resource "aws_db_subnet_group" "db_subnet_group_pub" {
-  count = var.publicly_accessible ? 1 : 0
+  # count = var.publicly_accessible ? 1 : 0
 
-  name = "${var.resource_grp_name}-subnet-group"
+  name = "${var.resource_grp_name}-subnet-group-pub"
 
   # subnet_ids = data.aws_subnets.pvt_subnets.ids # use the IPs in the private subnet
 
