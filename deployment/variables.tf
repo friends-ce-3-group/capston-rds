@@ -65,3 +65,7 @@ variable "publicly_accessible" {
 variable "db_restore_from_latest_snapshot" {
   type = bool
 }
+
+variable "kms_key_id" {
+  type = string
+}
