@@ -1,6 +1,6 @@
 data "aws_db_snapshot" "db_snapshot" {
-    most_recent = true
-    db_instance_identifier = var.db_name
+  db_snapshot_identifier = "friendscapstonerdsbackup27nov"
+  db_instance_identifier = var.db_name
 }
 
 resource "aws_db_instance" "rdsdb" {
@@ -14,7 +14,7 @@ resource "aws_db_instance" "rdsdb" {
   username            = var.db_username
   password            = var.db_pw
   publicly_accessible = var.publicly_accessible
-  snapshot_identifier = var.db_restore_from_latest_snapshot? data.aws_db_snapshot.db_snapshot.id : null
+  snapshot_identifier = var.db_restore_from_latest_snapshot ? data.aws_db_snapshot.db_snapshot.id : null
 
   parameter_group_name = aws_db_parameter_group.mysql_pg.name
 
@@ -26,7 +26,7 @@ resource "aws_db_instance" "rdsdb" {
   backup_window           = var.db_backup_window           # UTC time. 3am-4am SGT
   maintenance_window      = var.db_maintenance_window      # Preferred UTC maintenance window
 
-  skip_final_snapshot       = true # backups are created in the form of snapshots
+  skip_final_snapshot = true # backups are created in the form of snapshots
   # final_snapshot_identifier = "${var.resource_grp_name}-db-snapshot"
   final_snapshot_identifier = null
 
@@ -34,8 +34,8 @@ resource "aws_db_instance" "rdsdb" {
   monitoring_role_arn          = aws_iam_role.rds_monitoring_role.arn
   performance_insights_enabled = true # enable performance insights
 
-  storage_encrypted = true                    # Enable storage encryption
-  kms_key_id        = aws_kms_key.kms_key.arn # Specify the KMS key ID for encryption
+  storage_encrypted = true                                                                              # Enable storage encryption
+  kms_key_id        = var.kms_key_arn == null ? element(aws_kms_key.kms_key.*.arn, 0) : var.kms_key_arn # Specify the KMS key ID for encryption
 
   multi_az = true # Enable Multi-AZ deployment for high availability
 
@@ -48,23 +48,23 @@ resource "aws_db_instance" "rdsdb" {
     proj_name = "friends-capstone"
   }
 
-  depends_on = [ aws_kms_key.kms_key ]
+  depends_on = [aws_kms_key.kms_key]
 }
 
-locals{
+locals {
   cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 }
 
 resource "aws_cloudwatch_log_group" "log_data" {
   for_each = toset(local.cloudwatch_logs_exports)
 
-  name = "/aws/rds/instance/${aws_db_instance.rdsdb.identifier}/${each.value}"
+  name              = "/aws/rds/instance/${aws_db_instance.rdsdb.identifier}/${each.value}"
   retention_in_days = 0
 }
 
 resource "aws_db_instance" "replica" {
   # count = var.publicly_accessible ? 0 : 1
-  
+
   identifier = "${var.db_name}-replica"
 
   replicate_source_db = aws_db_instance.rdsdb.identifier
@@ -79,7 +79,7 @@ resource "aws_db_instance" "replica" {
   backup_window           = var.db_backup_window
   maintenance_window      = var.db_maintenance_window
 
-  skip_final_snapshot       = true
+  skip_final_snapshot = true
   # final_snapshot_identifier = "${var.resource_grp_name}-db-replica-snapshot"
   final_snapshot_identifier = null
 

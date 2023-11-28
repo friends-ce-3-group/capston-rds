@@ -36,4 +36,10 @@ module "rds" {
   db_sg_allows_ingress_from_these_sg = local.vpc_sg_ids
 
   db_restore_from_latest_snapshot = var.db_restore_from_latest_snapshot
+
+  kms_key_arn = data.aws_kms_key.by_id.arn
+}
+
+data "aws_kms_key" "by_id" {
+  key_id = "17f3f911-3d85-4e77-b680-da10507c7849"
 }

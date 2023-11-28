@@ -67,7 +67,13 @@ variable "publicly_accessible" {
 }
 
 variable "db_restore_from_latest_snapshot" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false # specifying default makes this an optional variable
   description = "Whether to restore RDS from the latest snapshot"
+}
+
+variable "kms_key_arn" {
+  type        = string
+  description = "KMS key arn"
+  default     = null # specifying default makes this an optional variable
 }

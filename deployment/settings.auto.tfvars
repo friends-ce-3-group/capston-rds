@@ -26,4 +26,4 @@ db_backup_retention_period = 7
 
 db_monitoring_interval = 60 # seconds, min 60s
 
-db_restore_from_latest_snapshot = false
+db_restore_from_latest_snapshot = true

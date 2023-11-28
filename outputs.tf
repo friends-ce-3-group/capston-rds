@@ -13,7 +13,7 @@
 output "db_endpoint" {
   value = aws_db_instance.rdsdb.address
 
-  depends_on = [ aws_db_instance.rdsdb ]
+  depends_on = [aws_db_instance.rdsdb]
 }
 
 output "db_endpoint_port" {
