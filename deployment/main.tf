@@ -37,7 +37,7 @@ module "rds" {
 
   kms_key_arn = data.aws_kms_key.by_id.arn
 
-  ecs_sg_id = aws_security_group.vpc_sg_ecstask.id
+  ecs_sg_id = data.aws_security_group.vpc_sg_ecstask.id
 }
 
 data "aws_kms_key" "by_id" {
