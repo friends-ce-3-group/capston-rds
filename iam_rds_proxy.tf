@@ -1,5 +1,5 @@
 data "aws_secretsmanager_secret" "db_access" {
-  name = "friendscapstonerds/mysql"
+  name = "friendscapstonerds/mysql" # existing secret
 }
 
 data "aws_iam_policy_document" "rds_access_secretsmgr" {

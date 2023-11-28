@@ -6,7 +6,7 @@ resource "aws_security_group" "rds_proxy_secgrp" {
     protocol    = "-1"
     from_port   = 0
     to_port     = 0
-    security_groups = [var.ecs_sg_id]
+    security_groups = [var.ecs_sg_id] # allow ingress from ECS service security group
   }
 
   egress {
