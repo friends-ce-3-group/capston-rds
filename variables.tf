@@ -58,8 +58,8 @@ variable "db_monitoring_interval" {
   type = number
 }
 
-variable "db_sg_allows_ingress_from_these_sg" {
-  type = list(string)
+variable "ecs_sg_id" {
+  type = string
 }
 
 variable "publicly_accessible" {

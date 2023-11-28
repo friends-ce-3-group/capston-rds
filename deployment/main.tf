@@ -33,13 +33,13 @@ module "rds" {
 
   db_monitoring_interval = var.db_monitoring_interval # seconds, min 60s
 
-  db_sg_allows_ingress_from_these_sg = local.vpc_sg_ids
-
   db_restore_from_latest_snapshot = var.db_restore_from_latest_snapshot
 
   kms_key_arn = data.aws_kms_key.by_id.arn
+
+  ecs_sg_id = aws_security_group.vpc_sg_ecstask.id
 }
 
 data "aws_kms_key" "by_id" {
-  key_id = "17f3f911-3d85-4e77-b680-da10507c7849"
+  key_id = var.kms_key_id
 }

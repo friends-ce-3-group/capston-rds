@@ -22,9 +22,9 @@ data "aws_security_group" "vpc_sg_ecstask" {
   }
 }
 
-locals {
-  vpc_sg_ids = [
-    #    data.aws_security_group.vpc_sg_alb.id,
-    data.aws_security_group.vpc_sg_ecstask.id
-  ]
-}
+# locals {
+#   vpc_sg_ids = [
+#     #    data.aws_security_group.vpc_sg_alb.id,
+#     data.aws_security_group.vpc_sg_ecstask.id
+#   ]
+# }

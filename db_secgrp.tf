@@ -23,23 +23,13 @@ resource "aws_security_group" "rds_secgrp" {
       protocol        = "-1"
       from_port       = 0
       to_port         = 0
-      security_groups = var.db_sg_allows_ingress_from_these_sg
+      # security_groups = var.db_sg_allows_ingress_from_these_sg
+      security_groups = [
+        aws_security_group.rds_proxy_secgrp.id, # allow ingress from rds proxy only
+        var.ecs_sg_id # remove this when pydbcapstone is configured to use rds proxy endpoint instead
+        ] 
     }
   }
-
-  # ingress {
-  #   protocol        = "-1"
-  #   from_port       = 0
-  #   to_port         = 0
-  #   cidr_blocks = ["0.0.0.0/0"]
-  # }
-
-  # ingress {
-  #   protocol        = "-1"
-  #   from_port       = 0
-  #   to_port         = 0
-  #   security_groups = var.db_sg_allows_ingress_from_these_sg
-  # }
 
   egress {
     protocol    = "-1"
