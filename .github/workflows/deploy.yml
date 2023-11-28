@@ -23,7 +23,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./testing
+        working-directory: ./deployment
 
     steps:
       - name: Checkout Repository
