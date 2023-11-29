@@ -20,14 +20,14 @@ resource "aws_security_group" "rds_secgrp" {
     for_each = var.publicly_accessible ? [] : [1]
 
     content {
-      protocol        = "-1"
-      from_port       = 0
-      to_port         = 0
+      protocol  = "-1"
+      from_port = 0
+      to_port   = 0
       # security_groups = var.db_sg_allows_ingress_from_these_sg
       security_groups = [
-        aws_security_group.rds_proxy_secgrp.id, # allow ingress from rds proxy only
-        var.ecs_sg_id # remove this when pydbcapstone is configured to use rds proxy endpoint instead
-        ] 
+        # aws_security_group.rds_proxy_secgrp.id, # allow ingress from rds proxy only
+        var.ecs_sg_id                           # remove this when pydbcapstone is configured to use rds proxy endpoint instead
+      ]
     }
   }
 
