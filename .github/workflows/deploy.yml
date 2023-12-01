@@ -50,28 +50,28 @@ jobs:
           fi
         shell: bash
 
-      # - name: Push RDS endpoint to organization variables
-      #   run: |
-      #     cat RDS_ADDRESS.dat
-      #     source RDS_ADDRESS.dat
-      #     if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"'$RDS_ADDRESS_URL'","visibility":"all"}'
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_PROXY_ENDPOINT_ADDRESS -d '{"name":"RDS_PROXY_ENDPOINT_ADDRESS","value":"'$RDS_PROXY_ENPOINT'","visibility":"all"}'
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_DBNAME -d '{"name":"RDS_DBNAME","value":"'$RDS_DBNAME'","visibility":"all"}'
-      #     elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"EMPTY","visibility":"all"}'  
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_PROXY_ENDPOINT_ADDRESS -d '{"name":"RDS_PROXY_ENDPOINT_ADDRESS","value":"EMPTY","visibility":"all"}'
-      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_DBNAME -d '{"name":"RDS_DBNAME","value":"EMPTY","visibility":"all"}'
-      #     fi
-
       - name: Push RDS endpoint to organization variables
         run: |
           cat RDS_ADDRESS.dat
           source RDS_ADDRESS.dat
           if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
             curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"'$RDS_ADDRESS_URL'","visibility":"all"}'
+            curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_PROXY_ENDPOINT_ADDRESS -d '{"name":"RDS_PROXY_ENDPOINT_ADDRESS","value":"'$RDS_PROXY_ENPOINT'","visibility":"all"}'
             curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_DBNAME -d '{"name":"RDS_DBNAME","value":"'$RDS_DBNAME'","visibility":"all"}'
           elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then
             curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"EMPTY","visibility":"all"}'  
+            curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_PROXY_ENDPOINT_ADDRESS -d '{"name":"RDS_PROXY_ENDPOINT_ADDRESS","value":"EMPTY","visibility":"all"}'
             curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_DBNAME -d '{"name":"RDS_DBNAME","value":"EMPTY","visibility":"all"}'
           fi
+
+      # - name: Push RDS endpoint to organization variables
+      #   run: |
+      #     cat RDS_ADDRESS.dat
+      #     source RDS_ADDRESS.dat
+      #     if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
+      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"'$RDS_ADDRESS_URL'","visibility":"all"}'
+      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_DBNAME -d '{"name":"RDS_DBNAME","value":"'$RDS_DBNAME'","visibility":"all"}'
+      #     elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then
+      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_ENDPOINT_ADDRESS -d '{"name":"RDS_ENDPOINT_ADDRESS","value":"EMPTY","visibility":"all"}'  
+      #       curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/RDS_DBNAME -d '{"name":"RDS_DBNAME","value":"EMPTY","visibility":"all"}'
+      #     fi

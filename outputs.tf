@@ -20,6 +20,6 @@ output "db_endpoint_port" {
   value = aws_db_instance.rdsdb.port
 }
 
-# output "rdsproxy_db_endpoint" {
-#   value = aws_db_proxy.db_proxy.endpoint
-# }
+output "rdsproxy_endpoint" {
+  value = aws_db_proxy.db_proxy.endpoint
+}
