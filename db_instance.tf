@@ -34,7 +34,7 @@ resource "aws_db_instance" "rdsdb" {
   monitoring_role_arn          = aws_iam_role.rds_monitoring_role.arn
   performance_insights_enabled = true # enable performance insights
 
-  storage_encrypted = true                                                                              # Enable storage encryption
+  storage_encrypted = true            # Enable storage encryption
   kms_key_id        = var.kms_key_arn # Specify the KMS key ID for encryption
 
   multi_az = true # Enable Multi-AZ deployment for high availability

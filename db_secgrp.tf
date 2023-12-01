@@ -3,10 +3,10 @@ resource "aws_security_group" "rds_secgrp" {
   vpc_id = local.vpc_id_found
 
   ingress {
-    from_port         = 0
-    to_port           = 0
-    protocol          = "-1"
-    self              = true
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    self      = true
   }
 
 
@@ -33,7 +33,7 @@ resource "aws_security_group" "rds_secgrp" {
       # security_groups = var.db_sg_allows_ingress_from_these_sg
       security_groups = [
         # aws_security_group.rds_proxy_secgrp.id, # allow ingress from rds proxy only
-        var.ecs_sg_id                           # remove this when pydbcapstone is configured to use rds proxy endpoint instead
+        var.ecs_sg_id # remove this when pydbcapstone is configured to use rds proxy endpoint instead
       ]
     }
   }

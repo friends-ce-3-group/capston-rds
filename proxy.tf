@@ -7,7 +7,7 @@ resource "aws_db_proxy" "db_proxy" {
   role_arn            = aws_iam_role.rdsproxy_secrets_role.arn
   # vpc_security_group_ids = [aws_security_group.rds_proxy_secgrp.id]
   vpc_security_group_ids = [aws_security_group.rds_secgrp.id]
-  vpc_subnet_ids         = local.private_and_public_subnets
+  vpc_subnet_ids         = data.aws_subnets.private_subnets.ids
 
   auth {
     auth_scheme               = "SECRETS"

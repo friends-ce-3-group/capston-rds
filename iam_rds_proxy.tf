@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "rds_access_secretsmgr" {
   statement {
     effect = "Allow"
     actions = [
-        "kms:Decrypt"
+      "kms:Decrypt"
     ]
     resources = ["*"]
   }
