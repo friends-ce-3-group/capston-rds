@@ -20,7 +20,7 @@ resource "aws_db_instance" "rdsdb" {
 
   # vpc_security_group_ids = [data.aws_security_group.vpc_secgrp.id]
   vpc_security_group_ids = [aws_security_group.rds_secgrp.id]
-  db_subnet_group_name   = var.publicly_accessible ? aws_db_subnet_group.db_subnet_group_pub.name : aws_db_subnet_group.db_subnet_group_pvt.name
+  db_subnet_group_name   = aws_db_subnet_group.db_subnet_group_all.name
 
   backup_retention_period = var.db_backup_retention_period # number of days to retain automated backups
   backup_window           = var.db_backup_window           # UTC time. 3am-4am SGT
@@ -35,7 +35,7 @@ resource "aws_db_instance" "rdsdb" {
   performance_insights_enabled = true # enable performance insights
 
   storage_encrypted = true                                                                              # Enable storage encryption
-  kms_key_id        = var.kms_key_arn == null ? element(aws_kms_key.kms_key.*.arn, 0) : var.kms_key_arn # Specify the KMS key ID for encryption
+  kms_key_id        = var.kms_key_arn # Specify the KMS key ID for encryption
 
   multi_az = true # Enable Multi-AZ deployment for high availability
 
@@ -48,7 +48,6 @@ resource "aws_db_instance" "rdsdb" {
     proj_name = "friends-capstone"
   }
 
-  depends_on = [aws_kms_key.kms_key]
 }
 
 locals {

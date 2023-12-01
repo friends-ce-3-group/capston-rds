@@ -28,4 +28,5 @@ db_monitoring_interval = 60 # seconds, min 60s
 
 db_restore_from_latest_snapshot = true
 
+# kms_key_id = "86bf82c9-5f64-479b-ac92-77b15fb90543" # AWS managed keys: aws/rds
 kms_key_id = "17f3f911-3d85-4e77-b680-da10507c7849"
