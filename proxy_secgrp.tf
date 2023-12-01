@@ -22,12 +22,12 @@
 #   }
 # }
 
-# resource "aws_security_group_rule" "rdssg_self_ingress" {
-#   security_group_id = aws_security_group.rds_secgrp.id
+resource "aws_security_group_rule" "rdssg_self_ingress" {
+  security_group_id = aws_security_group.rds_secgrp.id
   
-#   type              = "ingress"
-#   from_port         = 0
-#   to_port           = 0
-#   protocol          = "-1"
-#   self              = true
-# }
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  self              = true
+}
