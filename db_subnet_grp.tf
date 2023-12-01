@@ -45,10 +45,10 @@
 #   }
 # }
 
-locals{
-  # private_and_public_subnets = concat(data.aws_subnets.public_subnets.ids, data.aws_subnets.private_subnets.ids)
-  private_and_public_subnets = data.aws_subnets.private_subnets.ids
-}
+# locals{
+#   # private_and_public_subnets = concat(data.aws_subnets.public_subnets.ids, data.aws_subnets.private_subnets.ids)
+#   private_and_public_subnets = data.aws_subnets.private_subnets.ids
+# }
 
 # Associate DB with public subnets when publicly_accessible
 resource "aws_db_subnet_group" "db_subnet_group_all" {
@@ -58,7 +58,7 @@ resource "aws_db_subnet_group" "db_subnet_group_all" {
 
   # subnet_ids = data.aws_subnets.pvt_subnets.ids # use the IPs in the private subnet
 
-  subnet_ids = local.private_and_public_subnets # use the IPs in the private subnet
+  subnet_ids = data.aws_subnets.private_subnets.ids # use the IPs in the private subnet
 
   tags = {
     Name = "${var.resource_grp_name}-subnet-group"
