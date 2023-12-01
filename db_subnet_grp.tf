@@ -46,7 +46,8 @@
 # }
 
 locals{
-  private_and_public_subnets = concat(data.aws_subnets.public_subnets.ids, data.aws_subnets.private_subnets.ids)
+  # private_and_public_subnets = concat(data.aws_subnets.public_subnets.ids, data.aws_subnets.private_subnets.ids)
+  private_and_public_subnets = data.aws_subnets.private_subnets.ids
 }
 
 # Associate DB with public subnets when publicly_accessible

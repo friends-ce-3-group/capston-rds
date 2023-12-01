@@ -2,6 +2,13 @@ resource "aws_security_group" "rds_secgrp" {
   name   = "${var.resource_grp_name}-sg"
   vpc_id = local.vpc_id_found
 
+  ingress {
+    from_port         = 0
+    to_port           = 0
+    protocol          = "-1"
+    self              = true
+  }
+
 
   # allow access from all IP when publicly_accessible
   dynamic "ingress" {
