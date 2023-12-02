@@ -38,4 +38,8 @@ module "rds" {
   kms_key_arn = data.aws_kms_key.by_id.arn
 
   ecs_sg_id = data.aws_security_group.vpc_sg_ecstask.id
+
+  with_read_replica = var.with_read_replica
+
+  snapshot_name = var.snapshot_name
 }

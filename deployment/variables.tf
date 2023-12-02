@@ -69,3 +69,14 @@ variable "db_restore_from_latest_snapshot" {
 variable "kms_key_id" {
   type = string
 }
+
+variable "with_read_replica" {
+  type = bool
+  description = "Set to true to turn on read replica"
+  default = false
+}
+
+variable "snapshot_name" {
+  type = string
+  default = null
+}

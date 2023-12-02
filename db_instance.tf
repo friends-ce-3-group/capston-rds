@@ -1,5 +1,5 @@
 data "aws_db_snapshot" "db_snapshot" {
-  db_snapshot_identifier = "friendscapstonerdsbackup27nov"
+  db_snapshot_identifier = var.snapshot_name
   db_instance_identifier = var.db_name
 }
 
@@ -62,7 +62,7 @@ resource "aws_cloudwatch_log_group" "log_data" {
 }
 
 resource "aws_db_instance" "replica" {
-  # count = var.publicly_accessible ? 0 : 1
+  count = var.with_read_replica ? 1 : 0
 
   identifier = "${var.db_name}-replica"
 

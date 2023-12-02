@@ -77,3 +77,14 @@ variable "kms_key_arn" {
   description = "KMS key arn"
   default     = null # specifying default makes this an optional variable
 }
+
+variable "with_read_replica" {
+  type = bool
+  description = "Set to true to turn on read replica"
+  default = false
+}
+
+variable "snapshot_name" {
+  type = string
+  default = null
+}
