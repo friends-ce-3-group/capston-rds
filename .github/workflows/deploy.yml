@@ -45,12 +45,12 @@ jobs:
         run: terraform validate
 
       - name: plan
-        run: terraform plan -var "db_username=${{ secrets.DB_USERNAME }}" -var "db_pw=${{ secrets.DB_PASSWORD }}" -var-file="common.tfvars" -var-file="${{ github.event.environment }}.tfvars"
+        run: terraform plan -var "db_username=${{ secrets.DB_USERNAME }}" -var "db_pw=${{ secrets.DB_PASSWORD }}" -var-file="common.tfvars" -var-file="${{ github.event.inputs.environment }}.tfvars"
 
       - name: apply or destroy
         run: |
           if [ ${{ github.event.inputs.deployment }} == 'Apply' ]; then  
-            terraform apply -var "db_username=${{ secrets.DB_USERNAME }}" -var "db_pw=${{ secrets.DB_PASSWORD }}" -var-file="common.tfvars" -var-file="${{ github.event.environment }}.tfvars" -auto-approve
+            terraform apply -var "db_username=${{ secrets.DB_USERNAME }}" -var "db_pw=${{ secrets.DB_PASSWORD }}" -var-file="common.tfvars" -var-file="${{ github.event.inputs.environment }}.tfvars" -auto-approve
           elif [ ${{ github.event.inputs.deployment }} == 'Destroy' ]; then  
             terraform destroy -auto-approve
           fi
