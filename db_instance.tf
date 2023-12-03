@@ -3,6 +3,10 @@ data "aws_db_snapshot" "db_snapshot" {
   db_instance_identifier = var.db_name
 }
 
+locals {
+  cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
+}
+
 resource "aws_db_instance" "rdsdb" {
   identifier          = var.db_name
   allocated_storage   = var.db_allocated_storage # 5 GB
@@ -41,17 +45,13 @@ resource "aws_db_instance" "rdsdb" {
 
   apply_immediately = true
 
-  enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
+  enabled_cloudwatch_logs_exports = local.cloudwatch_logs_exports
 
   tags = {
     name      = var.db_name
     proj_name = "friends-capstone"
   }
 
-}
-
-locals {
-  cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 }
 
 resource "aws_cloudwatch_log_group" "log_data" {
